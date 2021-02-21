@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -23,12 +25,14 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+    @NotEmpty(message = "Username is mandatory field. Please provide username.")
     @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 
+    @Size(min = 2, message = "FirstName should have at least 2 characters.")
     @Column(name = "firstname", length = 50, nullable = false, unique = false)
     private String firstname;
 
