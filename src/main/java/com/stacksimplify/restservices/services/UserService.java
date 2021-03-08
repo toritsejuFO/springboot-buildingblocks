@@ -44,7 +44,7 @@ public class UserService {
         if (existingUser.isEmpty()) {
             throw new UserNotFoundException("User not found. Provide a valid id.");
         }
-        existingUser.get().setId(id);
+        existingUser.get().setUserId(id);
         return userRepository.save(existingUser.get());
     }
 

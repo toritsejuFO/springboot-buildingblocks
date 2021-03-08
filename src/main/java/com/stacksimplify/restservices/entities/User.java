@@ -2,7 +2,9 @@ package com.stacksimplify.restservices.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,17 +17,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class User extends RepresentationModel<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Long userId;
 
     @NotEmpty(message = "Username is mandatory field. Please provide username.")
     @Column(name = "username", length = 50, nullable = false, unique = true)

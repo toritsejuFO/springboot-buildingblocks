@@ -29,15 +29,6 @@ public class OrderController {
     @Autowired
     private final OrderRepository orderRepository;
 
-    @GetMapping(path = "/{user_id}/orders")
-    public List<Order> getAllOrders(@PathVariable(name = "user_id") Long userId) throws UserNotFoundException {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User Not Found");
-        }
-        return user.get().getOrders();
-    }
-
     @PostMapping(path = "/{user_id}/orders")
     public Order createOrder(@PathVariable(name = "user_id") Long userId, @RequestBody Order order) throws UserNotFoundException {
         Optional<User> exitingUser = userRepository.findById(userId);

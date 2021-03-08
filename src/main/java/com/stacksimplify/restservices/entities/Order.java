@@ -3,6 +3,7 @@ package com.stacksimplify.restservices.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "orders")
 @NoArgsConstructor
 @Data
-public class Order {
+public class Order extends RepresentationModel<Order> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
