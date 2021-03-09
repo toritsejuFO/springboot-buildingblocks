@@ -1,5 +1,7 @@
 package com.stacksimplify.restservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonIgnoreProperties({"firstname", "lastname"})
 public class User extends RepresentationModel<User> {
 
     @Id
@@ -47,6 +50,7 @@ public class User extends RepresentationModel<User> {
     @Column(name = "role", length = 50, nullable = false, unique = false)
     private String role;
 
+    @JsonIgnore
     @Column(name = "ssn", length = 50, nullable = false, unique = true)
     private String ssn;
 
