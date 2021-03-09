@@ -24,9 +24,6 @@ public class OrderHateoasController {
     @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
-    private final OrderRepository orderRepository;
-
     @GetMapping(path = "/{user_id}/orders")
     public CollectionModel<Order> getAllOrders(@PathVariable(name = "user_id") Long userId) throws UserNotFoundException {
         Optional<User> user = userRepository.findById(userId);
