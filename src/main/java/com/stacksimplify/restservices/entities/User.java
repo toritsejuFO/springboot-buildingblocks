@@ -20,7 +20,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -64,4 +64,7 @@ public class User extends RepresentationModel<User> {
     @OneToMany(mappedBy = "user")
     @JsonView(View.Internal.class)
     private List<Order> orders;
+
+    @Column(name = "address", length = 50)
+    private String address;
 }
