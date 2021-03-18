@@ -5,10 +5,14 @@ import com.stacksimplify.restservices.exceptions.UserExistsException;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.exceptions.UsernameNotFoundException;
 import com.stacksimplify.restservices.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,17 +35,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(value = "/users")
+@Api(tags = "UserController", value = "User management RESTful services")
 public class UserController {
     @Autowired
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Fetch all users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder) {
+    @ApiOperation(value = "Create a new user")
+    public ResponseEntity<Void> createUser(@ApiParam(value = "User information to be created") @Valid @RequestBody User user, UriComponentsBuilder builder) {
         try {
             userService.createUser(user);
             HttpHeaders headers = new HttpHeaders();
@@ -53,9 +60,10 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<User> getUserById(@PathVariable(name = "id") @Min(1) Long id) {
+    public User getUserById(@PathVariable(name = "id") @Min(1) Long id) {
         try {
-            return userService.getUserById(id);
+            Optional<User> optionalUser = userService.getUserById(id);
+            return optionalUser.get();
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
